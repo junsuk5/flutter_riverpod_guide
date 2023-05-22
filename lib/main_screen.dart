@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_guide/di.dart';
-import 'package:riverpod_guide/main_state.dart';
+import 'package:riverpod_guide/main_view_model.dart';
 
 class MainScreen extends ConsumerWidget {
   const MainScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch<MainState>(mainViewModel);
+    final viewModel = ref.watch(mainViewModel.notifier);
+    final state = ref.watch(mainViewModel);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('riverpod'),
@@ -27,7 +28,7 @@ class MainScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ref.read(mainViewModel.notifier).increment();
+          viewModel.increment();
         },
         child: const Icon(Icons.add),
       ),
